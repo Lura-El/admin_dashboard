@@ -16,8 +16,11 @@ const api = axios.create({
 
 // Request interceptor (optional: add CSRF header if needed)
 api.interceptors.request.use(config => {
-  // If you’re using Laravel Sanctum, CSRF token is handled automatically
-  // after calling /sanctum/csrf-cookie once.
+  // Get the CSRF token from cookies and add to headers
+  const token = document.cookie.split('; ').find(row => row.startsWith('XSRF-TOKEN='))?.split('=')[1];
+  if (token) {
+    config.headers['X-XSRF-TOKEN'] = decodeURIComponent(token);
+  }
 
   return config
 })

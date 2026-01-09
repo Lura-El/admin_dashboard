@@ -8,6 +8,9 @@ export const useAuthStore = defineStore('auth-store', {
     loading: false,
     errors: {}
   }),
+    getters: {
+        isAuthenticated: (state) => !!state.user,
+    },
 
   actions: {
     async login(credentials) {
@@ -20,8 +23,9 @@ export const useAuthStore = defineStore('auth-store', {
 
             // Then login (Laravel will set session cookie automatically)
             const response = await api.post('/auth/login', credentials)
-            this.user = response.data.user
-
+           const { data } = await api.get('/api/user'); // protected route 
+           this.user = data;
+            
             return { success: true, data: response.data }
         } catch (error) {
             if (error.response?.status === 422) {

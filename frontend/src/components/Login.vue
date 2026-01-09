@@ -33,7 +33,7 @@
         const res = await auth.login({ email: loginData.email, password: loginData.password })
 
         if (res?.success) {
-            router.push({ name: 'dashboard' })
+            router.push('/dashboard')
             return
         }
 

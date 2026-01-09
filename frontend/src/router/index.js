@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from '@/stores/authStore'
 
 import LoginView from '@/components/Login.vue'
-import Dashboard from '@/views/Dashboard.vue'
+import DashboardView from '@/views/Dashboard.vue'
 import UsersView from "@/views/UsersView.vue"
 import ReportView from "@/views/ReportView.vue";
 import NotFoundView from '@/views/NotFoundView.vue'
@@ -12,13 +12,12 @@ const routes = [
         path: '/',
         name: 'login',
         component: LoginView,
-
         meta: { guest: true }
     },
     {
         path: '/dashboard',
         name: 'dashboard',
-        component: Dashboard,
+        component: DashboardView,
         meta: {requiresAuth: true}
     },
     {
