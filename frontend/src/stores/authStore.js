@@ -25,6 +25,7 @@ export const useAuthStore = defineStore('auth-store', {
             const response = await api.post('/auth/login', credentials)
            const { data } = await api.get('/api/user'); // protected route 
            this.user = data;
+           localStorage.setItem('user', JSON.stringify(data)); // Persist to localStorage
             
             return { success: true, data: response.data }
         } catch (error) {
@@ -44,6 +45,7 @@ export const useAuthStore = defineStore('auth-store', {
             await api.post('/logout') // backend clears cookie
         } finally {
             this.user = null
+            localStorage.removeItem('user'); // Clear from localStorage
             router.push({ name: 'login' })
         }
     },
@@ -52,8 +54,21 @@ export const useAuthStore = defineStore('auth-store', {
         try {
             const response = await api.get('/api/user')
             this.user = response.data
+            localStorage.setItem('user', JSON.stringify(response.data)); // Persist on successful fetch
         } catch {
             this.user = null
+            localStorage.removeItem('user'); // Clear if fetch fails (session expired)
+        }
+    },
+
+    restoreUser() {
+        const stored = localStorage.getItem('user');
+        if (stored) {
+            try {
+                this.user = JSON.parse(stored);
+            } catch {
+                localStorage.removeItem('user');
+            }
         }
     }
   }

@@ -1,19 +1,22 @@
 <script setup>
     import { RouterView } from 'vue-router';
+    import { useAuthStore } from './stores/authStore';
+    import { onMounted } from 'vue';
+
+    const auth = useAuthStore();
+    
+    onMounted(() => {
+        // Restore user from localStorage first
+        auth.restoreUser();
+        // Then fetch fresh user data from server to verify session
+        auth.fetchUser();
+    });
 </script>
 
 <template>
-   <div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div>
-    <h1 class="text-3xl font-semibold text-gray-800 mb-6">
-      Welcome to <span class="text-green-700">My Company</span> Admin Page
-    </h1>
-    <RouterView />
-  </div>
-</div>
-
-
-    
+    <div>
+        <RouterView />  
+    </div>
 </template>
 
 

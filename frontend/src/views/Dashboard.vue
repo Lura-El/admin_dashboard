@@ -7,13 +7,11 @@
 
 <template>
     <HeadNavbar/>
-    <div class="flex">
+    <div class="flex h-[calc(100vh-64px)]">
         <Sidebar/>
-        <main>
-            
-            <RouterView/>
+        <main class="flex-1 w-full overflow-auto pt-16 md:pt-0">  
+           hello
         </main>
-
     </div>
 </template>
 

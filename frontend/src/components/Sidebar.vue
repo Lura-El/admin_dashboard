@@ -1,12 +1,54 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+import { ref } from 'vue';
 
+const isOpen = ref(false);
+
+const toggleSidebar = () => {
+    isOpen.value = !isOpen.value;
+};
 
 </script>
 
 <template>
+    <!-- Hamburger Button (visible on small screens) -->
+    <button
+        @click="toggleSidebar"
+        class="fixed left-4 z-50 md:hidden rounded-lg hover:bg-gray-300 transition"
+        aria-label="Toggle sidebar"
+    >
+        <svg
+            v-if="!isOpen"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg
+            v-else
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
 
-    <nav class="w-64 h-screen bg-gray-100 shadow-md ">
+    <!-- Sidebar -->
+    <nav
+        :class="[
+            'fixed md:static md:translate-x-0 transition-transform duration-300 z-40',
+            'w-64 h-screen bg-gray-100 shadow-md',
+            isOpen ? 'translate-x-0' : '-translate-x-full'
+        ]"
+    >
 
         <div class="flex flex-col gap-6 p-6">
             <h2 class="text-xl font-semibold text-gray-800">Admin Panel</h2>
@@ -50,6 +92,5 @@ import { RouterLink } from 'vue-router';
             </li>
             </ul>
         </div>
-       
     </nav>
 </template>

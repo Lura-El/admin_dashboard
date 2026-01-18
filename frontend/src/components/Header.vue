@@ -1,3 +1,10 @@
+<script setup>
+    import { useAuthStore } from '@/stores/authStore';
+
+    const auth = useAuthStore();
+
+
+</script>
 <template>
     <header class="flex items-center justify-between bg-white shadow px-6 py-4">
         <!-- Left: Company Logo -->
@@ -8,7 +15,7 @@
 
         <!-- Right: User Info -->
         <div class="flex items-center gap-4">
-            <span class="text-gray-700 font-medium">Admin</span>
+            <span class="text-gray-700 font-medium">{{ auth.user.name }}</span>
             <img src="@/assets/profile_avatar.png" alt="User Avatar" class="w-10 h-10 rounded-full border" />
         </div>
     </header>
